@@ -1,0 +1,401 @@
+/*
+   dashboardStyle.css  –  Sleep Summary (phone)
+   */
+
+/*  Colours  */
+:root {
+    --bg: #f4f7fe;
+    --card: #ffffff;
+    --text: #141b3c;
+    --muted: #7a82a0;
+    --accent: #4d6ef5;
+    --accent-soft: #e6ecfe;
+    --border: #e8ecf7;
+    --good: #22a06b;
+    --good-soft: #e3f6ec;
+    --sun: #f5b82e;
+
+    --awake: #e3e7f3;
+    --rem: #b9c3f7;
+    --light: #8fa6f7;
+    --deep: #3e5bdb;
+}
+
+/*  Reset  */
+* { box-sizing: border-box; }
+
+/* Hide the scrollbar (scrolling still works) so the page looks like a real app */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+p, h1, h2, figure, ul { margin: 0; padding: 0; }
+
+body {
+    width: 100%;                   /* fill the whole screen */
+    min-height: 100vh;
+    min-height: 100dvh;            /* correct height on phones with a browser bar */
+    margin: 0;
+    padding-bottom: 90px;          /* room for the bottom menu */
+    font-family: 'Nunito', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;                 /* lets <main> fill the leftover screen height */
+    flex-direction: column;
+}
+
+.muted { color: var(--muted); }
+.small { font-size: 0.8rem; line-height: 1.4; }
+
+/* All Lucide icons */
+.icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+/*  Top bar */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    max-width: 600px;              /* on big screens the content stays readable */
+    width: 100%;
+    margin: 0 auto;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+.logo .icon { width: 26px; height: 26px; }
+.profile-btn {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+/*  Main  */
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0 16px 16px;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    flex: 1;                       /* take all space between top bar and bottom menu */
+}
+
+/* Intro */
+.hero {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px;
+}
+.hero-text { flex: 1; }
+.eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+h1 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 8px;
+}
+.hero .muted { font-size: 0.85rem; }
+
+.larry {
+    width: 140px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;   /* blob shape */
+    background: var(--accent-soft);
+}
+
+/*  Cards  */
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 4px 16px rgba(77, 110, 245, 0.08);
+}
+.card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.card-title .icon { color: var(--accent); }
+.card-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.chevron {
+    color: var(--muted);
+    font-size: 1.5rem;
+    line-height: 1;
+    text-decoration: none;
+}
+
+/* ===== Total sleep ===== */
+.total-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.total-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+.big-number {
+    font-size: 2.1rem;
+    font-weight: 800;
+    line-height: 1;
+}
+.badge {
+    background: var(--good-soft);
+    color: var(--good);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+.badge.warn { background: #fff1e0; color: #c56a00; }
+
+/* Ring made with a conic-gradient; --percent is set in the HTML */
+.ring {
+    width: 124px;
+    height: 124px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent) var(--percent), var(--accent-soft) 0);
+    display: grid;
+    place-items: center;
+}
+.ring-inner {
+    width: 102px;
+    height: 102px;
+    border-radius: 50%;
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.ring-inner .icon { color: var(--accent); margin-bottom: 2px; }
+.ring-inner strong { font-size: 1.05rem; font-weight: 800; }
+.ring-inner small { color: var(--muted); font-size: 0.7rem; }
+
+/*  Sleep stages chart (one column per night)  */
+.week-chart {
+    display: flex;
+    gap: 10px;
+    height: 130px;
+    padding: 8px 8px 0;
+    border-radius: 12px;
+    background: linear-gradient(#f8f9ff, #eef1fd);
+}
+.night {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.night-bar {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;   /* first piece (deep) sits at the bottom */
+    border-radius: 6px 6px 0 0;
+    overflow: hidden;
+}
+.piece.awake { background: #d5dbef; }
+.piece.rem   { background: var(--rem); }
+.piece.light { background: var(--light); }
+.piece.deep  { background: var(--deep); }
+.night-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    padding-bottom: 4px;
+}
+.night:last-child .night-label { color: var(--accent); font-weight: 700; }   /* last night */
+
+.legend-title { margin-top: 12px; }
+
+.legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    list-style: none;
+    margin-top: 6px;
+    font-size: 0.75rem;
+}
+.legend li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 5px;
+    align-items: center;
+}
+.legend small {
+    grid-column: 2;
+    color: var(--muted);
+    font-size: 0.62rem;
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.dot.awake { background: #c9cfe3; }
+.dot.rem   { background: var(--rem); }
+.dot.light { background: var(--light); }
+.dot.deep  { background: var(--deep); }
+
+/*  Next morning  */
+/* flex: 1 → the card grows to fill the empty space at the bottom of tall phones */
+.morning-card {
+    flex: 1;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 22px;
+    background: linear-gradient(135deg, #fff6e0, var(--card) 70%);
+}
+.morning-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.icon.sun {
+    width: 44px;
+    height: 44px;
+    color: var(--sun);
+}
+.morning-info { flex: 1; }
+.morning-info h2 { font-weight: 600; font-size: 0.9rem; }
+.wake-time {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 4px 0;
+}
+.morning-card .pill-btn {
+    align-self: flex-start;
+    font-size: 0.85rem;
+    padding: 10px 16px;
+}
+.pill-btn {
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 8px 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/*  Bottom menu */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;                      /* full width, edge to edge */
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-radius: 20px 20px 0 0;
+    padding: 10px 0 18px;
+    box-shadow: 0 -4px 16px rgba(20, 27, 60, 0.05);
+}
+.bottom-nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+}
+.bottom-nav a.active { color: var(--accent); }
+.bottom-nav a.active::after {       /* small line under the active tab */
+    content: '';
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--accent);
+}
+
+/*
+   HOVER ANIMATIONS (based on animista.net)
+   Transitions animate BOTH ways: in on hover, and smoothly back when you stop.
+   */
+
+/* ---- shadow-inset-center: buttons get a soft "pressed in" shadow ---- */
+.profile-btn,
+.pill-btn {
+    box-shadow: inset 0 0 0 0 rgba(77, 110, 245, 0);
+    transition: box-shadow 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+}
+.profile-btn:hover,
+.profile-btn:focus-visible,
+.pill-btn:hover,
+.pill-btn:focus-visible {
+    box-shadow: inset 0 0 14px 0 rgba(77, 110, 245, 0.45);
+}
+
+/* ---- slide-top: icons move up, and slide back down when you stop hovering ---- */
+.logo .icon,
+.bottom-nav .icon,
+.icon.sun {
+    transition: transform 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+}
+.logo:hover .icon,
+.bottom-nav a:hover .icon,
+.bottom-nav a:focus-visible .icon,
+.morning-card:hover .icon.sun {
+    transform: translateY(-4px);
+}
+
+/* Colour change on the menu items, also smooth */
+.bottom-nav a { transition: color 0.3s ease; }
+.bottom-nav a:hover { color: var(--accent); }
+
+/* People who turn off animations in their system settings won't see them */
+@media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+}
