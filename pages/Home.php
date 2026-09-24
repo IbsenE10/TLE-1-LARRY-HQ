@@ -15,7 +15,7 @@
 
     <header>
         <div>
-        <h1>test</h1>
+        <h1></h1>
         </div>
     </header>
 
@@ -31,7 +31,7 @@
                     </p>
                 </div>
                 <div class="Larry">
-                    <img src="https://i.pinimg.com/originals/4c/7f/8a/4c7f8a215dc20467ed48ff4c21ec8166.jpg" 
+                    <img src="https://freesvg.org/img/Placeholder.png" 
                     alt="Larrypng">
                 </div>
         </section>

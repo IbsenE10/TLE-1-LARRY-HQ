@@ -9,7 +9,7 @@ body{
     box-sizing: border-box;
 }
 
-header {
+/* header {
     height: 100vh;
     background-image: url(Larry\ effect.png);
     background-size: cover;
@@ -19,7 +19,7 @@ header {
     justify-content: center;
     text-align: center;
     border-radius: 2%;
-}
+} */
 
 nav{
     height: 4vh;
