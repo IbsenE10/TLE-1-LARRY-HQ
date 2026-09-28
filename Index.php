@@ -20,12 +20,16 @@
 
                 <div class="time-block">
                     <span class="time-label">SleepTime</span>
-                    <div class="time-box">22:30</div>
+                    <div class="time-box">
+                        <input type="time" id="sleep-time" name="sleep-time" value="22:30">
+                    </div>
                 </div>
 
                 <div class="time-block">
                     <span class="time-label">WakeTime</span>
-                    <div class="time-box">07:30</div>
+                    <div class="time-box">
+                        <input type="time" id="wake-time" name="wake-time" value="07:30">
+                    </div>
                 </div>
 
             </div>
