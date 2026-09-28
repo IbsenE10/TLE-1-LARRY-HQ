@@ -134,6 +134,8 @@ function e($text) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/insightsStyle.css">
+    <!-- NEW: the JavaScript for this page (defer = run after the HTML has loaded) -->
+    <script src="../js/insights.js" defer></script>
 </head>
 <body>
 
@@ -153,6 +155,8 @@ function e($text) {
     <!--  INTRO  -->
     <section class="hero">
         <div class="hero-text">
+            <!-- NEW (idea 4): JS turns this into "Good morning, larry!" etc. -->
+            <p class="greeting" id="greeting" data-name="<?= e($user['username']) ?>">Hello!</p>
             <p class="eyebrow">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 5h4"/><path d="M20 3v4"/><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
                 Sleep Summary
@@ -165,7 +169,7 @@ function e($text) {
 
     <?php if ($lastNight): ?>
 
-        <!--  TOTAL SLEEP  -->
+        <!--  TOTAL SLEEP  (idea 2: JS animates .big-number and .ring) -->
         <section class="card total-card" aria-labelledby="total-title">
             <div class="total-info">
                 <h2 class="card-title" id="total-title">
@@ -194,7 +198,7 @@ function e($text) {
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 17V9"/><path d="M18 17V5"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-3"/></svg>
                         Sleep Stages
                     </h2>
-                    <p class="muted small">Your last <?= count($week) ?> nights. Each bar is one night, split into sleep stages.</p>
+                    <p class="muted small">Your last <?= count($week) ?> nights. Tap a night to see its details.</p>
                 </div>
                 <a href="#" class="chevron" aria-label="More about your sleep stages">›</a>
             </header>
@@ -203,7 +207,13 @@ function e($text) {
                 <!-- One column per night. Each piece's height = minutes in that stage. -->
                 <div class="week-chart" role="img" aria-label="Sleep stages for the last <?= count($week) ?> nights">
                     <?php foreach ($week as $night): ?>
-                        <div class="night">
+                        <!-- NEW (idea 1): the data- attributes give JS this night's numbers -->
+                        <div class="night"
+                             data-day="<?= date('l', strtotime($night['sleep_date'])) ?>"
+                             data-awake="<?= $night['awake_minutes'] ?>"
+                             data-rem="<?= $night['rem_minutes'] ?>"
+                             data-light="<?= $night['light_minutes'] ?>"
+                             data-deep="<?= $night['deep_minutes'] ?>">
                             <div class="night-bar">
                                 <?php foreach (['deep', 'light', 'rem', 'awake'] as $stage): ?>
                                     <div class="piece <?= $stage ?>"
@@ -222,7 +232,8 @@ function e($text) {
                             <li>
                                 <span class="dot <?= $stage['key'] ?>"></span>
                                 <b><?= $stage['label'] ?></b>
-                                <small><?= $stage['time'] ?> (<?= $stage['percent'] ?>%)</small>
+                                <!-- NEW (idea 1): data-stage lets JS find and change this text -->
+                                <small data-stage="<?= $stage['key'] ?>"><?= $stage['time'] ?> (<?= $stage['percent'] ?>%)</small>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -248,7 +259,8 @@ function e($text) {
                 <?php endif; ?>
             </div>
         </div>
-        <a href="#" class="pill-btn">View details ›</a>
+        <!-- Alarms are edited on their own page now -->
+        <a href="Alarm.php" class="pill-btn">View details ›</a>
     </section>
 
 </main>
