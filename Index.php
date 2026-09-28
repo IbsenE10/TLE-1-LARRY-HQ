@@ -75,6 +75,4 @@
         </nav>
     </main>
 
-    <footer>
-</footer>
 </html>
