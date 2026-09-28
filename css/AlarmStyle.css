@@ -13,7 +13,7 @@ body {
     flex-direction: column;
     align-items: center;
 
-    padding-top: 70px;
+    padding-top: 10px;
 
     /* ruimte zodat de onderste content niet achter de nav komt */
     padding-bottom: 110px;
