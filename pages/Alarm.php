@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TLE1</title>
-    <link rel="stylesheet" href="../css/HomeStyle.css">
+    <link rel="stylesheet" href="../css/AlarmStyle.css">
 </head>
 
 <body>
@@ -14,6 +14,32 @@
 
     <main>
         
+        <div class="sleep-page">
+
+            <div class="time-section">
+
+                <div class="time-block">
+                    <span class="time-label">SleepTime</span>
+                    <div class="time-box">22:30</div>
+                </div>
+
+                <div class="time-block">
+                    <span class="time-label">WakeTime</span>
+                    <div class="time-box">07:30</div>
+                </div>
+
+            </div>
+
+            <!-- Hier de lamp -->
+            <div class="lamp">
+                <img src="../images/Lamp100.png" alt="lamp">
+            </div>
+
+            <div class="percentage-circle">
+                100%
+            </div>
+
+        </div>
 
         <nav class="bottom-nav" aria-label="Main menu">
             <ul>
