@@ -70,7 +70,7 @@
                 </a>
             </li>
             <li>
-                <a href="Index.php">
+                <a href="../Index.php">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="7"/><path d="M12 13V9"/><path d="M12 13l3 2"/><path d="M4 6a3 3 0 0 1 4-3"/><path d="M20 6a3 3 0 0 0-4-3"/><path d="M8 20l-1.5 2"/><path d="M16 20l1.5 2"/></svg>
                     Alarm
                 </a>
