@@ -77,9 +77,9 @@ nav a :hover{
 footer {
     background: white;
 }
-/* ═════════════════════════════════════════════
+/*
    BOTTOM MENU (same look as the dashboard)
-   ═════════════════════════════════════════════ */
+   */
 
 body {
     padding-bottom: 90px;              /* so the menu doesn't cover the last content */
