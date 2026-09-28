@@ -36,12 +36,17 @@
 
             <!-- Hier de lamp -->
             <div class="lamp">
-                <img src="../images/Lamp100.png" alt="lamp">
+                <img id="lamp-image" src="images/Lamp100.png" alt="lamp">
             </div>
 
             <div class="percentage-circle">
                 100%
             </div>
+
+            <label class="power-switch">
+                <input type="checkbox" id="alarm-toggle" checked>
+                <span class="slider"></span>
+            </label>
 
         </div>
 
@@ -75,4 +80,5 @@
         </nav>
     </main>
 
+</body>
 </html>

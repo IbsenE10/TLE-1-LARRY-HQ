@@ -56,6 +56,20 @@ body {
     font-size: 27px;
 }
 
+.time-box input[type="time"] {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    appearance: none;
+
+    color: #bcbcbc;
+    font-size: 27px;
+    text-align: center;
+}
+
+.time-box input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
 
 .lamp {
     width: 235px;
@@ -91,6 +105,45 @@ body {
 
     color: #bcbcbc;
     font-size: 17px;
+}
+
+.power-switch {
+    margin-top: 18px;
+}
+
+.power-switch input {
+    display: none;
+}
+
+.slider {
+    display: block;
+    width: 60px;
+    height: 32px;
+    background: #bcbcbc;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 4px;
+    left: 4px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.power-switch input:checked + .slider {
+    background: #4d6ef5;
+}
+
+.power-switch input:checked + .slider::before {
+    transform: translateX(28px);
 }
 
 
