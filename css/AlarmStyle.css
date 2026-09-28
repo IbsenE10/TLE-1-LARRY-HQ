@@ -1,0 +1,222 @@
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    overflow-y: auto;
+}
+
+.sleep-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 10px;
+
+    /* ruimte zodat de onderste content niet achter de nav komt */
+    padding-bottom: 110px;
+}
+
+/* SleepTime + WakeTime naast elkaar */
+.time-section {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+/* Eén tijdblok */
+.time-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* SleepTime / WakeTime tekst */
+.time-label {
+    color: #bcbcbc;
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+
+/* Tijd zelf */
+.time-box {
+    width: 155px;
+    height: 56px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 3px solid #bcbcbc;
+    border-radius: 28px;
+
+    color: #bcbcbc;
+    font-size: 27px;
+}
+
+.time-box input[type="time"] {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    appearance: none;
+
+    color: #bcbcbc;
+    font-size: 27px;
+    text-align: center;
+}
+
+.time-box input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.lamp {
+    width: 235px;
+    height: 235px;
+
+    margin-top: 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lamp img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* 100% cirkel */
+.percentage-circle {
+    width: 58px;
+    height: 58px;
+
+    margin-top: 18px;
+
+    border: 3px solid #bcbcbc;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #bcbcbc;
+    font-size: 17px;
+}
+
+.power-switch {
+    margin-top: 18px;
+}
+
+.power-switch input {
+    display: none;
+}
+
+.slider {
+    display: block;
+    width: 60px;
+    height: 32px;
+    background: #bcbcbc;
+    border-radius: 20px;
+    cursor: pointer;
+    position: relative;
+    transition: 0.3s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 4px;
+    left: 4px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.power-switch input:checked + .slider {
+    background: #4d6ef5;
+}
+
+.power-switch input:checked + .slider::before {
+    transform: translateX(28px);
+}
+
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    /* always on top of the page */
+    height: auto;
+    /* undo "nav { height: 4vh }" */
+    margin: 0;
+    /* undo "nav { margin: 10px }" */
+    display: block;
+    /* undo "nav { display: flex }" */
+    background: #ffffff;
+    border-top: 1px solid #e8ecf7;
+    border-radius: 20px 20px 0 0;
+    padding: 10px 0 18px;
+    box-shadow: 0 -4px 16px rgba(20, 27, 60, 0.05);
+    font-family: 'Nunito', Arial, sans-serif;
+}
+
+.bottom-nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    background: none;
+    /* undo "nav a { background-color: #fff }" */
+    padding: 0;
+    /* undo "nav a { padding: 10px }" */
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #7a82a0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.bottom-nav .icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+}
+
+/* Hover: blue + icon slides up (and smoothly back) */
+.bottom-nav a:hover {
+    color: #4d6ef5;
+}
+
+.bottom-nav a:hover .icon {
+    transform: translateY(-4px);
+}
+
+/* Active page: blue with a small line under it */
+.bottom-nav a.active {
+    color: #4d6ef5;
+}
+
+.bottom-nav a.active::after {
+    content: '';
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+    background: #4d6ef5;
+}
