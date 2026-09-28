@@ -8,7 +8,9 @@ body {
     margin: 0;
 }
 
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+}
 
 .container {
     width: 100%;
@@ -31,7 +33,7 @@ body {
 .form-fields {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 15px;
 }
 
 h2 {
@@ -84,15 +86,32 @@ p a:hover {
     text-decoration: underline;
 }
 
+.error-message {
+    padding: 12px;
+    background: #F8D7DA;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #a42834;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+
+/* BOTTOM NAV */
+
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    height: auto;                      /* undo "nav { height: 4vh }" */
-    margin: 0;                         /* undo "nav { margin: 10px }" */
-    display: block;                    /* undo "nav { display: flex }" */
+    height: auto;
+    /* undo "nav { height: 4vh }" */
+    margin: 0;
+    /* undo "nav { margin: 10px }" */
+    display: block;
+    /* undo "nav { display: flex }" */
     background: #ffffff;
     border-top: 1px solid #e8ecf7;
     border-radius: 20px 20px 0 0;
@@ -106,7 +125,8 @@ p a:hover {
     list-style: none;
     max-width: 600px;
     margin: 0 auto;
-    padding: 0;                        /* remove the default list indent */
+    padding: 0;
+    /* remove the default list indent */
 }
 
 .bottom-nav a {
@@ -114,8 +134,10 @@ p a:hover {
     flex-direction: column;
     align-items: center;
     gap: 3px;
-    background: none;                  /* undo "nav a { background-color: #fff }" */
-    padding: 0;                        /* undo "nav a { padding: 10px }" */
+    background: none;
+    /* undo "nav a { background-color: #fff }" */
+    padding: 0;
+    /* undo "nav a { padding: 10px }" */
     font-size: 0.7rem;
     font-weight: 600;
     color: #7a82a0;
@@ -124,15 +146,24 @@ p a:hover {
 }
 
 .bottom-nav .icon {
-    width: 20px;                       /* without this the icons become huge */
+    width: 20px;
+    /* without this the icons become huge */
     height: 20px;
     transition: transform 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 }
 
-.bottom-nav a:hover { color: #4d6ef5; }
-.bottom-nav a:hover .icon { transform: translateY(-4px); }
+.bottom-nav a:hover {
+    color: #4d6ef5;
+}
 
-.bottom-nav a.active { color: #4d6ef5; }
+.bottom-nav a:hover .icon {
+    transform: translateY(-4px);
+}
+
+.bottom-nav a.active {
+    color: #4d6ef5;
+}
+
 .bottom-nav a.active::after {
     content: '';
     width: 20px;
@@ -142,5 +173,7 @@ p a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
+    * {
+        transition: none !important;
+    }
 }
