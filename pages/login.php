@@ -65,11 +65,13 @@ function isActiveForm($formName, $activeForm){
             <form action="login_register.php" method="post">
                 <h2>Register</h2>
                 <?= showError($errors ['register']);  ?>
-                <input type="text" name="username" placeholder="Username" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit" name="register">Register</button>
-                <p>Already have an account? <a href="#" onclick="showForm('login-form')">Login</a></p>
+                <div class="form-fields">
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="email" name="email" placeholder="Email" required>
+                    <input type="password" name="password" placeholder="Password" required>
+                    <button type="submit" name="register">Register</button>
+                    <p>Already have an account? <a href="#" onclick="showForm('login-form')">Login</a></p>
+                </div>
             </form>
         </div>
     </div>
