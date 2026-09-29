@@ -2,76 +2,62 @@
 session_start();
 require_once 'db.php';
 
-//register
+if (isset($_POST['register'])) {
+    $username = trim($_POST['username'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-if (isset ($_POST['register'])) {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $emailCheck = $conn->prepare("SELECT email FROM users WHERE email = ?");
+    $emailCheck->bind_param('s', $email);
+    $emailCheck->execute();
+    $emailCheck->store_result();
 
-
-
-    //checks if email exists
-    $checkEmail = $conn->query("SELECT email FROM users WHERE email = '$email'");
-
-    if ($checkEmail->num_rows > 0) {
-
+    if ($emailCheck->num_rows > 0) {
         $_SESSION['register_error'] = 'Email is already registered!';
         $_SESSION['active_form'] = 'register';
-
-    } else {
-
-        $conn->query("
-        INSERT INTO users (username, email, password) 
-        VALUES ('$username', '$email', '$password')");
-
-        $_SESSION['active_form'] = 'login';
-        
-
-    }
-
-    header("Location: Home.php");
-    exit();
-
-}
-
-
-
-
-if(isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $result = $conn->query("SELECT * FROM users WHERE email = '$email'");
-
-    if($result->num_rows > 0) {
-
-        $user = $result->fetch_assoc();
-
-        if (password_verify($password, $user['password_hash'])) {
-
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['email'] = $user['email'];
-
-        }
-
-        // if($user['role'] === 'admin'){
-        //     header("Location: admin_page.php");
-        // } else {
-        //     header("Location: user_page.php");
-        // }
-
-        header("Location: ../pages/Home.php");
+        header('Location: ../pages/login_index.php');
         exit();
     }
 
-    //login failed
-    $_SESSION['login_error'] = 'Incorrect email or password';
-    $_SESSION['active_form'] = 'login';
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $insertUser = $conn->prepare("INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)");
+    $insertUser->bind_param('sss', $username, $email, $hashedPassword);
 
-    header("Location: ../pages/login_index.php");
+    if ($insertUser->execute()) {
+        $_SESSION['active_form'] = 'login';
+        header('Location: ../pages/login_index.php');
+        exit();
+    }
+
+    $_SESSION['register_error'] = 'Registration failed. Please try again.';
+    $_SESSION['active_form'] = 'register';
+    header('Location: ../pages/login_index.php');
     exit();
-
 }
 
+if (isset($_POST['login'])) {
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    $stmt = $conn->prepare("SELECT username, email, password_hash FROM users WHERE email = ?");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        if (password_verify($password, $user['password_hash'])) {
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['email'] = $user['email'];
+            header('Location: ../pages/Home.php');
+            exit();
+        }
+    }
+
+    $_SESSION['login_error'] = 'Incorrect email or password';
+    $_SESSION['active_form'] = 'login';
+    header('Location: ../pages/login_index.php');
+    exit();
+}
 ?>
