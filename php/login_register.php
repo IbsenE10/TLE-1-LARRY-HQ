@@ -4,9 +4,8 @@ session_start();
 require_once 'db.php';
 
 
-// ==========================
 // REGISTER
-// ==========================
+
 
 if (isset($_POST['register'])) {
 
@@ -50,9 +49,8 @@ if (isset($_POST['register'])) {
 
 
 
-// ==========================
+
 // LOGIN
-// ==========================
 
 if (isset($_POST['login'])) {
 
