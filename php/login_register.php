@@ -50,8 +50,8 @@ if(isset($_POST['login'])) {
 
         if (password_verify($password, $user['password_hash'])) {
 
-            $_SESSION['username'] = $ ['username'];
-            $_SESSION['email'] = $ ['email'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['email'] = $user['email'];
 
         }
 
@@ -61,15 +61,15 @@ if(isset($_POST['login'])) {
         //     header("Location: user_page.php");
         // }
 
-        header("Location: Home.php");
+        header("Location: ../pages/Home.php");
         exit();
     }
 
     //login failed
-    $_SESSION['login_error'] = 'Incorrect emai or password'
-    $_SESSION['active_form'] = 'login'
+    $_SESSION['login_error'] = 'Incorrect email or password';
+    $_SESSION['active_form'] = 'login';
 
-    header("Location: home.php");
+    header("Location: ../pages/login.php");
     exit();
 
 }
