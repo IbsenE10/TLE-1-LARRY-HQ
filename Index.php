@@ -7,11 +7,7 @@
 </head>
 
 <body>
-
-    <header>
-        
-    </header>
-
+    
     <main>
         
         <div class="sleep-page">
@@ -81,5 +77,6 @@
     </main>
 
 </body>
-<script type="module" src="../js/Clock/main.js"></script>
+<script src="js/theme.js"></script>
+<script type="module" src="js/Clock/main.js"></script>
 </html>

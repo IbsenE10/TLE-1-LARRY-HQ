@@ -11,7 +11,7 @@ function formatMinutes(minutes) {
 }
 
 
-// ═════ IDEA 4: greeting based on the time of day ═════
+// IDEA 4: greeting based on the time of day
 const greeting = document.getElementById('greeting');
 
 if (greeting) {
@@ -27,7 +27,8 @@ if (greeting) {
 }
 
 
-// ═════ IDEA 1: hover or tap a night in the chart → show its numbers ═════
+
+// IDEA 1: hover or tap a night in the chart → show its numbers
 const nights      = document.querySelectorAll('.night');
 const legendTitle = document.querySelector('.legend-title');
 
