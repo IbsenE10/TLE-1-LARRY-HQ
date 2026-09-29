@@ -26,8 +26,7 @@ if (isset($_POST['register'])) {
         // Email bestaat al
         $_SESSION['register_error'] = 'Email is already registered!';
         $_SESSION['active_form'] = 'register';
-
-        header("Location: ../pages/login_index.php");
+        header('Location: ../pages/login_index.php');
         exit();
 
     }
@@ -74,7 +73,6 @@ if (isset($_POST['login'])) {
 
         // Wachtwoord controleren
         if (password_verify($password, $user['password_hash'])) {
-
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
 
@@ -87,9 +85,7 @@ if (isset($_POST['login'])) {
     // Login mislukt
     $_SESSION['login_error'] = 'Incorrect email or password';
     $_SESSION['active_form'] = 'login';
-
-    header("Location: ../pages/login_index.php");
+    header('Location: ../pages/login_index.php');
     exit();
 }
-
 ?>
