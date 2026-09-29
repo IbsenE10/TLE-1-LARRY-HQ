@@ -69,9 +69,29 @@ nav a :hover{
 }
 
 .Larry img {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    padding: 3px;                      /* the 3px "frame" where the light runs */
+    border-radius: 14px;
+    
+    background:
+            linear-gradient(#4d6ef5, #4d6ef5) top left     / 0 3px no-repeat,
+            linear-gradient(#4d6ef5, #4d6ef5) top right    / 3px 0 no-repeat,
+            linear-gradient(#4d6ef5, #4d6ef5) bottom right / 0 3px no-repeat,
+            linear-gradient(#4d6ef5, #4d6ef5) bottom left  / 3px 0 no-repeat,
+            #c9d4f7;
+
+    box-shadow: 0 0 0 0 rgba(77, 110, 245, 0);
+    transition: background-size 0.6s ease, box-shadow 0.6s ease;
+}
+
+.Larry img:hover {
+    /* each line grows to the full length of its edge */
+    background-size: 100% 3px, 3px 100%, 100% 3px, 3px 100%;
+    /* the glow around the image */
+    box-shadow: 0 0 18px rgba(77, 110, 245, 0.55),
+    0 0 45px rgba(77, 110, 245, 0.25);
 }
 
 footer {

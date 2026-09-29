@@ -399,3 +399,42 @@ h1 {
 @media (prefers-reduced-motion: reduce) {
     * { transition: none !important; }
 }
+
+/* Idea 4 – greeting */
+.greeting { font-weight: 700; color: #7a82a0; margin-bottom: 6px; }
+
+/* Idea 1 – clickable nights */
+.night { cursor: pointer; }
+.night.selected .night-bar { outline: 2px solid #4d6ef5; outline-offset: 2px; }
+.night.selected .night-label { color: #4d6ef5; font-weight: 700; }
+
+
+/* ===== Sleep stages: hover a night → bar grows + gets highlighted ===== */
+
+/* 1. Smooth animation, both on hover and back */
+.night-bar,
+.night-label,
+.night {
+    transition: transform 0.25s ease, opacity 0.25s ease,
+    box-shadow 0.25s ease, color 0.25s ease;
+}
+
+/* 2. The bar grows from the bottom (so it doesn't float up) */
+.night-bar { transform-origin: bottom center; }
+
+.night:hover .night-bar {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 2px #4d6ef5,                     /* blue outline */
+    0 6px 14px rgba(77, 110, 245, 0.35);   /* soft glow */
+}
+
+/* 3. The day label turns blue and bold */
+.night:hover .night-label {
+    color: #4d6ef5;
+    font-weight: 700;
+}
+
+/* 4. Fade the other nights, so the hovered one stands out */
+.week-chart:hover .night:not(:hover) {
+    opacity: 0.45;
+}
