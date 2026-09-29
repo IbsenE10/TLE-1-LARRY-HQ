@@ -220,3 +220,94 @@ body {
     border-radius: 2px;
     background: #4d6ef5;
 }
+
+/* --------------------------------------------------
+   TIME-BASED COLOR THEMES
+   Kleuren uit de styleguide. De bestaande layout blijft intact.
+   -------------------------------------------------- */
+:root {
+    --page-bg: #EEF6FF;
+    --surface: #FFFFFF;
+    --text-main: #111827;
+    --text-muted: #7A82A0;
+    --border: #D8E2F0;
+    --accent: #FFB800;
+    --nav-border: #E8ECF7;
+    --nav-shadow: rgba(20, 27, 60, 0.05);
+}
+
+body[data-theme="night"] {
+    --page-bg: #0B0E14;
+    --surface: #121926;
+    --text-main: #E0E6ED;
+    --text-muted: #A9B3C3;
+    --border: #344055;
+    --accent: #FFB800;
+    --nav-border: #273246;
+    --nav-shadow: rgba(0, 0, 0, 0.28);
+}
+
+body[data-theme="wake-up"] {
+    --page-bg: #FFF8E7;
+    --surface: #FFFFFF;
+    --text-main: #1F1F1F;
+    --text-muted: #767676;
+    --border: #EADFC7;
+    --accent: #FFB800;
+    --nav-border: #EFE6D4;
+    --nav-shadow: rgba(70, 55, 20, 0.08);
+}
+
+body[data-theme="focus"] {
+    --page-bg: #EEF6FF;
+    --surface: #FFFFFF;
+    --text-main: #111827;
+    --text-muted: #7A82A0;
+    --border: #D8E2F0;
+    --accent: #FFB800;
+    --nav-border: #E8ECF7;
+    --nav-shadow: rgba(20, 27, 60, 0.05);
+}
+
+body {
+    background: var(--page-bg);
+    color: var(--text-main);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.time-label,
+.time-box,
+.time-box input[type="time"],
+.percentage-circle {
+    color: var(--text-muted);
+}
+
+.time-box,
+.percentage-circle {
+    border-color: var(--border);
+}
+
+.bottom-nav {
+    background: var(--page-bg);
+    border-top-color: var(--nav-border);
+    box-shadow: 0 -4px 16px var(--nav-shadow);
+    transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+.bottom-nav a {
+    color: var(--text-muted);
+}
+
+.bottom-nav a:hover,
+.bottom-nav a.active {
+    color: var(--accent);
+}
+
+.bottom-nav a.active::after,
+.power-switch input:checked + .slider {
+    background: var(--accent);
+}
+
+.slider {
+    background: var(--border);
+}
