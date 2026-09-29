@@ -7,11 +7,6 @@
 </head>
 
 <body>
-    <nav>
-        <div>logo</div>
-        <div id="empty"></div>
-        <a href="login.php">Login</a>
-    </nav>
 
     <header>
         <div>
