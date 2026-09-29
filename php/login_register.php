@@ -69,7 +69,7 @@ if(isset($_POST['login'])) {
     $_SESSION['login_error'] = 'Incorrect email or password';
     $_SESSION['active_form'] = 'login';
 
-    header("Location: ../pages/login.php");
+    header("Location: ../pages/login_index.php");
     exit();
 
 }
