@@ -1,82 +1,95 @@
 <?php
+
 session_start();
 require_once 'db.php';
 
-//register
 
-if (isset ($_POST['register'])) {
+// ==========================
+// REGISTER
+// ==========================
+
+if (isset($_POST['register'])) {
+
     $username = $_POST['username'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 
+    // Check of email al bestaat
+    $checkEmail = $conn->query(
+        "SELECT email FROM users WHERE email = '$email'"
+    );
 
-    //checks if email exists
-    if (isset($_POST['register'])) {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    $checkEmail = $conn->query("SELECT email FROM users WHERE email = '$email'");
 
     if ($checkEmail->num_rows > 0) {
 
+        // Email bestaat al
         $_SESSION['register_error'] = 'Email is already registered!';
         $_SESSION['active_form'] = 'register';
 
         header("Location: ../pages/login_index.php");
         exit();
 
-    } else {
-
-        $conn->query("
-            INSERT INTO users (username, email, password_hash)
-            VALUES ('$username', '$email', '$password')
-        ");
-
-        header("Location: ../pages/Home.php");
-        exit();
     }
+
+
+    // Nieuwe gebruiker toevoegen
+    $conn->query(
+        "INSERT INTO users (username, email, password_hash)
+        VALUES ('$username', '$email', '$password')"
+    );
+
+
+    // Meteen inloggen na registratie
+    $_SESSION['username'] = $username;
+    $_SESSION['email'] = $email;
+
+
+    header("Location: ../pages/Home.php");
+    exit();
 }
-}
 
 
 
+// ==========================
+// LOGIN
+// ==========================
 
-if(isset($_POST['login'])) {
+if (isset($_POST['login'])) {
+
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $result = $conn->query("SELECT * FROM users WHERE email = '$email'");
 
-    if($result->num_rows > 0) {
+    // Gebruiker zoeken
+    $result = $conn->query(
+        "SELECT * FROM users WHERE email = '$email'"
+    );
+
+
+    if ($result->num_rows > 0) {
 
         $user = $result->fetch_assoc();
 
+
+        // Wachtwoord controleren
         if (password_verify($password, $user['password_hash'])) {
 
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email'];
 
+            header("Location: ../pages/Home.php");
+            exit();
         }
-
-        // if($user['role'] === 'admin'){
-        //     header("Location: admin_page.php");
-        // } else {
-        //     header("Location: user_page.php");
-        // }
-
-        header("Location: ../pages/Home.php");
-        exit();
     }
 
-    //login failed
+
+    // Login mislukt
     $_SESSION['login_error'] = 'Incorrect email or password';
     $_SESSION['active_form'] = 'login';
 
     header("Location: ../pages/login_index.php");
     exit();
-
 }
 
 ?>
