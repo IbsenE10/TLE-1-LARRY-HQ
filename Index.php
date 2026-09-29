@@ -81,4 +81,5 @@
     </main>
 
 </body>
+<script type="module" src="../js/Clock/main.js"></script>
 </html>
