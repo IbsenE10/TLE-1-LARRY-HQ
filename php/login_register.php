@@ -12,6 +12,11 @@ if (isset ($_POST['register'])) {
 
 
     //checks if email exists
+    if (isset($_POST['register'])) {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
     $checkEmail = $conn->query("SELECT email FROM users WHERE email = '$email'");
 
     if ($checkEmail->num_rows > 0) {
@@ -19,20 +24,20 @@ if (isset ($_POST['register'])) {
         $_SESSION['register_error'] = 'Email is already registered!';
         $_SESSION['active_form'] = 'register';
 
+        header("Location: ../pages/login_index.php");
+        exit();
+
     } else {
 
         $conn->query("
-        INSERT INTO users (username, email, password) 
-        VALUES ('$username', '$email', '$password')");
+            INSERT INTO users (username, email, password_hash)
+            VALUES ('$username', '$email', '$password')
+        ");
 
-        $_SESSION['active_form'] = 'login';
-        
-
+        header("Location: ../pages/Home.php");
+        exit();
     }
-
-    header("Location: Home.php");
-    exit();
-
+}
 }
 
 
