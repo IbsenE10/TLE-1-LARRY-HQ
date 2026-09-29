@@ -31,7 +31,7 @@
                     </p>
                 </div>
                 <div class="Larry">
-                    <img src="../images/larry-sleep.jpg.png"
+                    <img src="../images/larry-sleep.jpg"
                     alt="Larrypng">
                 </div>
         </section>
