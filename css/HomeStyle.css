@@ -21,61 +21,12 @@ body {
     border-radius: 2%;
 } */
 
-.subheading1 {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #111827;
-  padding: 40px 20px;
-}
-
-.subheading1 div {
-  flex: 1;
-}
-
 .discription {
-  flex: 1 1 300px;
-  padding: 20px;
-  font-size: clamp(1rem, 2vw, 1.2rem);
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.Larry {
-  flex: 1 1 300px;
-  display: flex;
-  justify-content: center;
-}
-
-.Larry img,
-.Larry video {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  padding: 3px; /* the 3px "frame" where the light runs */
-  border-radius: 14px;
-  box-shadow: 0 0 0 0 rgba(77, 110, 245, 0);
-  transition:
-    background-size 0.6s ease,
-    box-shadow 0.6s ease;
-}
-
-.Larry img:hover {
-  /* each line grows to the full length of its edge */
-  background-size:
-    100% 3px,
-    3px 100%,
-    100% 3px,
-    3px 100%;
-  /* the glow around the image */
-  box-shadow:
-    0 0 18px rgba(77, 110, 245, 0.55),
-    0 0 45px rgba(77, 110, 245, 0.25);
-}
-
-footer {
-  background: white;
-}
 /*
    BOTTOM MENU (same look as the Insights)
    */
