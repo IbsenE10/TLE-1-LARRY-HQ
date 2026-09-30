@@ -245,15 +245,17 @@ function e($text)
 
                 <figure>
                     <!-- One column per night. Each piece's height = minutes in that stage. -->
-                    <div class="week-chart" role="img" aria-label="Sleep stages for the last <?= count($week) ?> nights">
+                    <div class="week-chart" role="group" aria-label="Sleep stages for the last <?= count($week) ?> nights">
                         <?php foreach ($week as $night): ?>
                             <!-- NEW (idea 1): the data- attributes give JS this night's numbers -->
-                            <div class="night"
+                            <button class="night" type="button"
                                 data-day="<?= date('l', strtotime($night['sleep_date'])) ?>"
+                                data-date="<?= date('M j, Y', strtotime($night['sleep_date'])) ?>"
                                 data-awake="<?= $night['awake_minutes'] ?>"
                                 data-rem="<?= $night['rem_minutes'] ?>"
                                 data-light="<?= $night['light_minutes'] ?>"
-                                data-deep="<?= $night['deep_minutes'] ?>">
+                                data-deep="<?= $night['deep_minutes'] ?>"
+                                aria-label="View sleep stages for <?= date('l, F j, Y', strtotime($night['sleep_date'])) ?>">
                                 <div class="night-bar">
                                     <?php foreach (['deep', 'light', 'rem', 'awake'] as $stage): ?>
                                         <div class="piece <?= $stage ?>"
@@ -261,7 +263,7 @@ function e($text)
                                     <?php endforeach; ?>
                                 </div>
                                 <span class="night-label"><?= date('D', strtotime($night['sleep_date'])) ?></span>
-                            </div>
+                            </button>
                         <?php endforeach; ?>
                     </div>
 
@@ -280,6 +282,37 @@ function e($text)
                     </figcaption>
                 </figure>
             </section>
+
+            <dialog class="stage-dialog" id="stage-dialog" aria-labelledby="stage-dialog-date">
+                <div class="stage-dialog-header">
+                    <div>
+                        <p class="muted small">Sleep stages</p>
+                        <h2 id="stage-dialog-date"></h2>
+                    </div>
+                    <button class="stage-dialog-close" type="button" aria-label="Close sleep stage details">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <path d="m18 6-12 12M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="stage-dialog-summary"><strong id="stage-dialog-total"></strong> asleep <span id="stage-dialog-time-in-bed"></span></p>
+                <div class="stage-dialog-bar" aria-hidden="true">
+                    <span class="deep" data-detail-bar="deep"></span>
+                    <span class="light" data-detail-bar="light"></span>
+                    <span class="rem" data-detail-bar="rem"></span>
+                    <span class="awake" data-detail-bar="awake"></span>
+                </div>
+                <ul class="stage-dialog-list">
+                    <?php foreach (['deep' => 'Deep', 'light' => 'Light', 'rem' => 'REM', 'awake' => 'Awake'] as $key => $label): ?>
+                        <li>
+                            <span class="dot <?= $key ?>"></span>
+                            <span><?= $label ?></span>
+                            <strong data-detail-value="<?= $key ?>"></strong>
+                            <small data-detail-percent="<?= $key ?>"></small>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </dialog>
 
         <?php endif; ?>
 
