@@ -74,7 +74,8 @@ $percent = min(100, round($total / $goal * 100, 1));     // ring fill, max 100%
 // "Good sleep" = within 1 hour of the goal
 $rangeMin = ($goal - 60) / 60;                           // 480 → 7
 $rangeMax = ($goal + 60) / 60;                           // 480 → 9
-if ($total >= $goal - 60 && $total <= $goal + 60) {
+$sleepGoalMet = $total >= $goal - 60 && $total <= $goal + 60;
+if ($sleepGoalMet) {
     $title = "You're doing great!";
     $badge = '✓ Good sleep!';
     $badgeClass = '';
@@ -143,6 +144,7 @@ function e($text)
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/insightsStyle.css">
+    <link rel="icon" href="../images/LarryFavico.ico">
     <!-- NEW: the JavaScript for this page (defer = run after the HTML has loaded) -->
     <script src="../js/insights.js" defer></script>
 </head>
@@ -165,11 +167,8 @@ function e($text)
             </svg>
             GoodmorningLarry!
         </a>
-        <a class="profile-btn" href="login_index.php" aria-label="Your profile">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-            </svg>
+        <a class="profile-btn" href="profile.php" aria-label="Your profile">
+            <img src="../images/LarryAccount.png" alt="Account">
         </a>
     </header>
 
@@ -191,7 +190,7 @@ function e($text)
                 <h1><?= $lastNight ? $title : 'No sleep data yet' ?></h1>
                 <p class="muted">Here's how you slept, and how you feel today.</p>
             </div>
-            <img class="larry" src="../images/LarrySleep.png" alt="Larry the penguin sleeping">
+            <img class="larry" src="../images/<?= $sleepGoalMet ? 'LarryEnergetic.png' : 'LarrySleepy.png' ?>" alt="<?= $sleepGoalMet ? 'Larry the penguin feeling energetic' : 'Larry the penguin feeling sleepy' ?>">
         </section>
 
         <?php if ($lastNight): ?>
@@ -283,7 +282,7 @@ function e($text)
                 </figure>
             </section>
 
-            <dialog class="stage-dialog" id="stage-dialog" aria-labelledby="stage-dialog-date">
+            <dialog class="stage-dialog" id="stage-dialog" data-sleep-goal="<?= $goal ?>" aria-labelledby="stage-dialog-date">
                 <div class="stage-dialog-header">
                     <div>
                         <p class="muted small">Sleep stages</p>
@@ -295,7 +294,12 @@ function e($text)
                         </svg>
                     </button>
                 </div>
-                <p class="stage-dialog-summary"><strong id="stage-dialog-total"></strong> asleep <span id="stage-dialog-time-in-bed"></span></p>
+                <div class="stage-dialog-illustration">
+                    <img class="stage-dialog-larry" id="stage-dialog-larry" src="../images/LarrySleepy.png" alt="Larry the penguin feeling sleepy">
+                </div>
+                <div class="stage-dialog-overview">
+                    <p class="stage-dialog-summary"><strong id="stage-dialog-total"></strong> asleep <span id="stage-dialog-time-in-bed"></span></p>
+                </div>
                 <div class="stage-dialog-bar" aria-hidden="true">
                     <span class="deep" data-detail-bar="deep"></span>
                     <span class="light" data-detail-bar="light"></span>
@@ -361,7 +365,7 @@ function e($text)
                 </a>
             </li>
             <li>
-                <a href="login_index.php">
+                <a href="profile.php">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />

@@ -72,7 +72,7 @@ if (isset($_POST['login'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['email']    = $user['email'];
 
-            header("Location: ../Index.php");
+            header("Location: ../pages/Home.php");
             exit();
         }
     }
@@ -81,6 +81,17 @@ if (isset($_POST['login'])) {
     // Login mislukt
     $_SESSION['login_error'] = 'Incorrect email or password';
     $_SESSION['active_form'] = 'login';
+    header('Location: ../pages/login_index.php');
+    exit();
+}
+
+
+// LOGOUT
+
+if (isset($_POST['logout'])) {
+
+    session_unset();
+    session_destroy();
     header('Location: ../pages/login_index.php');
     exit();
 }
