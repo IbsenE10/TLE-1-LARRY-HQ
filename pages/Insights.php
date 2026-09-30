@@ -5,8 +5,13 @@
 session_start();
 require __DIR__ . '/../php/db.php';
 
-// No login yet → use the demo user (id 1). Once login works, it sets $_SESSION['user_id'].
-$userId = $_SESSION['user_id'] ?? 1;
+
+// Not logged in? Go to the login page first
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login_index.php');
+    exit;
+}
+$userId = $_SESSION['user_id'];   // the logged-in user → their own insights
 
 // 7h 48m style text from minutes (468 → "7h 48m")
 function formatMinutes($minutes)
