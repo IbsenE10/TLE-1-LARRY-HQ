@@ -21,7 +21,7 @@ body {
     border-radius: 2%;
 } */
 
-.subheading3 {
+.subheading1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -31,7 +31,7 @@ body {
   padding: 40px 20px;
 }
 
-.subheading3 div {
+.subheading1 div {
   flex: 1;
 }
 

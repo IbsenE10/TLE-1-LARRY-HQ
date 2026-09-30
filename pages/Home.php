@@ -18,7 +18,7 @@
     </header>
 
     <main>
-        <section class="subheading3">
+        <section class="subheading1">
             <div class="discription">
                 <h2>"Goodmorning Larry!"</h2>
                 <p>
