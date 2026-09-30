@@ -240,7 +240,7 @@ function e($text)
                         </h2>
                         <p class="muted small">Your last <?= count($week) ?> nights. Tap a night to see its details.</p>
                     </div>
-                    <a href="#" class="chevron" aria-label="More about your sleep stages">›</a>
+                    <button type="button" class="chevron" aria-label="More about your sleep stages">›</button>
                 </header>
 
                 <figure>

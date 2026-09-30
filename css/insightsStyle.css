@@ -178,10 +178,17 @@ h1 {
   margin-bottom: 14px;
 }
 .chevron {
+  padding: 10px;
+  border: 0;
   color: var(--muted);
   font-size: 1.5rem;
   line-height: 1;
-  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+}
+.chevron:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* ===== Total sleep ===== */
