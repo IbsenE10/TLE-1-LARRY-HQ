@@ -72,7 +72,7 @@ if (isset($_POST['login'])) {
             $_SESSION['username'] = $user['username'];
             $_SESSION['email']    = $user['email'];
 
-            header("Location: ../Index.php");
+            header("Location: ../pages/Home.php");
             exit();
         }
     }
