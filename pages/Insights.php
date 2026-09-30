@@ -74,7 +74,8 @@ $percent = min(100, round($total / $goal * 100, 1));     // ring fill, max 100%
 // "Good sleep" = within 1 hour of the goal
 $rangeMin = ($goal - 60) / 60;                           // 480 → 7
 $rangeMax = ($goal + 60) / 60;                           // 480 → 9
-if ($total >= $goal - 60 && $total <= $goal + 60) {
+$sleepGoalMet = $total >= $goal - 60 && $total <= $goal + 60;
+if ($sleepGoalMet) {
     $title = "You're doing great!";
     $badge = '✓ Good sleep!';
     $badgeClass = '';
@@ -143,6 +144,7 @@ function e($text)
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/insightsStyle.css">
+    <link rel="icon" href="../images/LarryFavico.ico">
     <!-- NEW: the JavaScript for this page (defer = run after the HTML has loaded) -->
     <script src="../js/insights.js" defer></script>
 </head>
@@ -165,11 +167,8 @@ function e($text)
             </svg>
             GoodmorningLarry!
         </a>
-        <a class="profile-btn" href="login_index.php" aria-label="Your profile">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-            </svg>
+        <a class="profile-btn" href="profile.php" aria-label="Your profile">
+            <img src="../images/LarryAccount.png" alt="Account">
         </a>
     </header>
 
@@ -191,7 +190,7 @@ function e($text)
                 <h1><?= $lastNight ? $title : 'No sleep data yet' ?></h1>
                 <p class="muted">Here's how you slept, and how you feel today.</p>
             </div>
-            <img class="larry" src="../images/LarrySleep.png" alt="Larry the penguin sleeping">
+            <img class="larry" src="../images/<?= $sleepGoalMet ? 'LarryEnergetic.png' : 'LarrySleepy.png' ?>" alt="<?= $sleepGoalMet ? 'Larry the penguin feeling energetic' : 'Larry the penguin feeling sleepy' ?>">
         </section>
 
         <?php if ($lastNight): ?>
@@ -240,20 +239,22 @@ function e($text)
                         </h2>
                         <p class="muted small">Your last <?= count($week) ?> nights. Tap a night to see its details.</p>
                     </div>
-                    <a href="#" class="chevron" aria-label="More about your sleep stages">›</a>
+                    <button type="button" class="chevron" aria-label="More about your sleep stages">›</button>
                 </header>
 
                 <figure>
                     <!-- One column per night. Each piece's height = minutes in that stage. -->
-                    <div class="week-chart" role="img" aria-label="Sleep stages for the last <?= count($week) ?> nights">
+                    <div class="week-chart" role="group" aria-label="Sleep stages for the last <?= count($week) ?> nights">
                         <?php foreach ($week as $night): ?>
                             <!-- NEW (idea 1): the data- attributes give JS this night's numbers -->
-                            <div class="night"
+                            <button class="night" type="button"
                                 data-day="<?= date('l', strtotime($night['sleep_date'])) ?>"
+                                data-date="<?= date('M j, Y', strtotime($night['sleep_date'])) ?>"
                                 data-awake="<?= $night['awake_minutes'] ?>"
                                 data-rem="<?= $night['rem_minutes'] ?>"
                                 data-light="<?= $night['light_minutes'] ?>"
-                                data-deep="<?= $night['deep_minutes'] ?>">
+                                data-deep="<?= $night['deep_minutes'] ?>"
+                                aria-label="View sleep stages for <?= date('l, F j, Y', strtotime($night['sleep_date'])) ?>">
                                 <div class="night-bar">
                                     <?php foreach (['deep', 'light', 'rem', 'awake'] as $stage): ?>
                                         <div class="piece <?= $stage ?>"
@@ -261,7 +262,7 @@ function e($text)
                                     <?php endforeach; ?>
                                 </div>
                                 <span class="night-label"><?= date('D', strtotime($night['sleep_date'])) ?></span>
-                            </div>
+                            </button>
                         <?php endforeach; ?>
                     </div>
 
@@ -280,6 +281,42 @@ function e($text)
                     </figcaption>
                 </figure>
             </section>
+
+            <dialog class="stage-dialog" id="stage-dialog" data-sleep-goal="<?= $goal ?>" aria-labelledby="stage-dialog-date">
+                <div class="stage-dialog-header">
+                    <div>
+                        <p class="muted small">Sleep stages</p>
+                        <h2 id="stage-dialog-date"></h2>
+                    </div>
+                    <button class="stage-dialog-close" type="button" aria-label="Close sleep stage details">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                            <path d="m18 6-12 12M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="stage-dialog-illustration">
+                    <img class="stage-dialog-larry" id="stage-dialog-larry" src="../images/LarrySleepy.png" alt="Larry the penguin feeling sleepy">
+                </div>
+                <div class="stage-dialog-overview">
+                    <p class="stage-dialog-summary"><strong id="stage-dialog-total"></strong> asleep <span id="stage-dialog-time-in-bed"></span></p>
+                </div>
+                <div class="stage-dialog-bar" aria-hidden="true">
+                    <span class="deep" data-detail-bar="deep"></span>
+                    <span class="light" data-detail-bar="light"></span>
+                    <span class="rem" data-detail-bar="rem"></span>
+                    <span class="awake" data-detail-bar="awake"></span>
+                </div>
+                <ul class="stage-dialog-list">
+                    <?php foreach (['deep' => 'Deep', 'light' => 'Light', 'rem' => 'REM', 'awake' => 'Awake'] as $key => $label): ?>
+                        <li>
+                            <span class="dot <?= $key ?>"></span>
+                            <span><?= $label ?></span>
+                            <strong data-detail-value="<?= $key ?>"></strong>
+                            <small data-detail-percent="<?= $key ?>"></small>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </dialog>
 
         <?php endif; ?>
 
@@ -310,7 +347,7 @@ function e($text)
                 </div>
             </div>
             <!-- Alarms are edited on their own page now -->
-            <a href="Alarm.php" class="pill-btn">View details ›</a>
+            <a href="/TLE-1-LARRY-HQ/Index.php" class="pill-btn">View details ›</a>
         </section>
 
     </main>
@@ -328,7 +365,7 @@ function e($text)
                 </a>
             </li>
             <li>
-                <a href="login_index.php">
+                <a href="profile.php">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
