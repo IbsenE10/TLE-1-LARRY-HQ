@@ -310,7 +310,7 @@ function e($text)
                 </div>
             </div>
             <!-- Alarms are edited on their own page now -->
-            <a href="Alarm.php" class="pill-btn">View details ›</a>
+            <a href="/TLE-1-LARRY-HQ/Index.php" class="pill-btn">View details ›</a>
         </section>
 
     </main>
