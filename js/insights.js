@@ -29,6 +29,39 @@ const legendTitle = document.querySelector(".legend-title");
 const stageDialog = document.getElementById("stage-dialog");
 const closeStageDialog = document.querySelector(".stage-dialog-close");
 
+// Summary button
+const stageSummaryButton = document.querySelector(
+  ".chevron[aria-label='More about your sleep stages']",
+);
+const stageNames = ["deep", "light", "rem", "awake"];
+
+function openStageDialog(title, minutesByStage) {
+  const timeInBed = stageNames.reduce(
+    (sum, stage) => sum + minutesByStage[stage],
+    0,
+  );
+  const sleepMinutes = timeInBed - minutesByStage.awake;
+
+  document.getElementById("stage-dialog-date").textContent = title;
+  document.getElementById("stage-dialog-total").textContent =
+    formatMinutes(sleepMinutes);
+  document.getElementById("stage-dialog-time-in-bed").textContent =
+    `of ${formatMinutes(timeInBed)} in bed`;
+
+  stageNames.forEach((stage) => {
+    const minutes = minutesByStage[stage];
+    const percent = timeInBed ? Math.round((minutes / timeInBed) * 100) : 0;
+    document.querySelector(`[data-detail-value="${stage}"]`).textContent =
+      formatMinutes(minutes);
+    document.querySelector(`[data-detail-percent="${stage}"]`).textContent =
+      `${percent}%`;
+    document.querySelector(`[data-detail-bar="${stage}"]`).style.width =
+      `${percent}%`;
+  });
+
+  stageDialog.showModal();
+}
+
 nights.forEach((night) => {
   // Everything that should happen for THIS night, in one function
   function showNight() {
@@ -53,37 +86,28 @@ nights.forEach((night) => {
   night.addEventListener("mouseenter", showNight); // computer: hover
   night.addEventListener("click", () => {
     showNight();
-
-    const stages = ["deep", "light", "rem", "awake"];
     const minutesByStage = Object.fromEntries(
-      stages.map((stage) => [stage, Number(night.dataset[stage])]),
+      stageNames.map((stage) => [stage, Number(night.dataset[stage])]),
     );
-    const timeInBed = Object.values(minutesByStage).reduce(
-      (sum, minutes) => sum + minutes,
-      0,
-    );
-    const sleepMinutes = timeInBed - minutesByStage.awake;
-
-    document.getElementById("stage-dialog-date").textContent =
-      night.dataset.date;
-    document.getElementById("stage-dialog-total").textContent =
-      formatMinutes(sleepMinutes);
-    document.getElementById("stage-dialog-time-in-bed").textContent =
-      `of ${formatMinutes(timeInBed)} in bed`;
-
-    stages.forEach((stage) => {
-      const minutes = minutesByStage[stage];
-      const percent = timeInBed ? Math.round((minutes / timeInBed) * 100) : 0;
-      document.querySelector(`[data-detail-value="${stage}"]`).textContent =
-        formatMinutes(minutes);
-      document.querySelector(`[data-detail-percent="${stage}"]`).textContent =
-        `${percent}%`;
-      document.querySelector(`[data-detail-bar="${stage}"]`).style.width =
-        `${percent}%`;
-    });
-
-    stageDialog.showModal();
+    openStageDialog(night.dataset.date, minutesByStage);
   });
+});
+
+stageSummaryButton?.addEventListener("click", () => {
+  const stageTotals = Object.fromEntries(stageNames.map((stage) => [stage, 0]));
+  nights.forEach((night) => {
+    stageNames.forEach((stage) => {
+      stageTotals[stage] += Number(night.dataset[stage]);
+    });
+  });
+
+  const averageMinutes = Object.fromEntries(
+    stageNames.map((stage) => [
+      stage,
+      Math.round(stageTotals[stage] / nights.length),
+    ]),
+  );
+  openStageDialog(`Average across ${nights.length} nights`, averageMinutes);
 });
 
 closeStageDialog?.addEventListener("click", () => stageDialog.close());
