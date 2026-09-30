@@ -1,19 +1,38 @@
 // Wisselt automatisch van kleurmodus op basis van de lokale tijd van het apparaat.
-// Pas alleen deze tijden aan als jullie later andere grenzen willen gebruiken.
-const THEME_TIMES = {
-    wakeUpStart: 6,  // 06:00
-    focusStart: 12,  // 12:00
-    nightStart: 20   // 20:00
-};
+
+function timeToMinutes(time) {
+    const [hours, minutes] = time.split(':').map(Number);
+
+    return (hours * 60) + minutes;
+}
 
 function getThemeForCurrentTime() {
-    const hour = new Date().getHours();
+    const wakeInput = document.getElementById('wake-time');
+    const sleepInput = document.getElementById('sleep-time');
 
-    if (hour >= THEME_TIMES.wakeUpStart && hour < THEME_TIMES.focusStart) {
+    // Stop als de inputs niet op deze pagina bestaan
+    if (!wakeInput || !sleepInput) {
+        return;
+    }
+
+    const wakeTime = timeToMinutes(wakeInput.value);
+    const sleepTime = timeToMinutes(sleepInput.value);
+
+    // 2 uur vóór en 2 uur na wakker worden
+    const wakeUpStart = wakeTime - (2 * 60);
+    const focusStart = wakeTime + (2 * 60);
+
+    // 2 uur vóór slapen begint night mode
+    const nightStart = sleepTime - (2 * 60);
+
+    const now = new Date();
+    const currentTime = (now.getHours() * 60) + now.getMinutes();
+
+    if (currentTime >= wakeUpStart && currentTime < focusStart) {
         return 'wake-up';
     }
 
-    if (hour >= THEME_TIMES.focusStart && hour < THEME_TIMES.nightStart) {
+    if (currentTime >= focusStart && currentTime < nightStart) {
         return 'focus';
     }
 
@@ -21,10 +40,31 @@ function getThemeForCurrentTime() {
 }
 
 function applyTimeTheme() {
-    document.body.dataset.theme = getThemeForCurrentTime();
+    const theme = getThemeForCurrentTime();
+
+    if (!theme) {
+        return;
+    }
+
+    document.body.dataset.theme = theme;
+
+    console.log(
+        `Applied theme: ${theme} at ${new Date().toLocaleTimeString()}`
+    );
 }
 
+
+// Meteen uitvoeren wanneer de pagina opent
 applyTimeTheme();
 
-// Controleer elke minuut opnieuw, zodat de modus ook wisselt als de pagina open blijft.
+
+// Elke minuut opnieuw controleren
 setInterval(applyTimeTheme, 60 * 1000);
+
+
+// Meteen opnieuw berekenen als WakeTime verandert
+document.getElementById('wake-time')?.addEventListener('change', applyTimeTheme);
+
+
+// Meteen opnieuw berekenen als SleepTime verandert
+document.getElementById('sleep-time')?.addEventListener('change', applyTimeTheme);
