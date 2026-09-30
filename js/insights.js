@@ -27,6 +27,7 @@ if (greeting) {
 const nights = document.querySelectorAll(".night");
 const legendTitle = document.querySelector(".legend-title");
 const stageDialog = document.getElementById("stage-dialog");
+const stageDialogLarry = document.getElementById("stage-dialog-larry");
 const closeStageDialog = document.querySelector(".stage-dialog-close");
 
 // Summary button
@@ -47,6 +48,15 @@ function openStageDialog(title, minutesByStage) {
     formatMinutes(sleepMinutes);
   document.getElementById("stage-dialog-time-in-bed").textContent =
     `of ${formatMinutes(timeInBed)} in bed`;
+  const sleepGoalMet =
+    sleepMinutes >= Number(stageDialog.dataset.sleepGoal) - 60 &&
+    sleepMinutes <= Number(stageDialog.dataset.sleepGoal) + 60;
+  stageDialogLarry.src = sleepGoalMet
+    ? "../images/LarryEnergetic.png"
+    : "../images/LarrySleepy.png";
+  stageDialogLarry.alt = sleepGoalMet
+    ? "Larry the penguin feeling energetic"
+    : "Larry the penguin feeling sleepy";
 
   stageNames.forEach((stage) => {
     const minutes = minutesByStage[stage];

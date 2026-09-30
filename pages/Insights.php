@@ -144,6 +144,7 @@ function e($text)
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/insightsStyle.css">
+    <link rel="icon" href="../images/LarryFavico.ico">
     <!-- NEW: the JavaScript for this page (defer = run after the HTML has loaded) -->
     <script src="../js/insights.js" defer></script>
 </head>
@@ -284,7 +285,7 @@ function e($text)
                 </figure>
             </section>
 
-            <dialog class="stage-dialog" id="stage-dialog" aria-labelledby="stage-dialog-date">
+            <dialog class="stage-dialog" id="stage-dialog" data-sleep-goal="<?= $goal ?>" aria-labelledby="stage-dialog-date">
                 <div class="stage-dialog-header">
                     <div>
                         <p class="muted small">Sleep stages</p>
@@ -296,7 +297,12 @@ function e($text)
                         </svg>
                     </button>
                 </div>
-                <p class="stage-dialog-summary"><strong id="stage-dialog-total"></strong> asleep <span id="stage-dialog-time-in-bed"></span></p>
+                <div class="stage-dialog-illustration">
+                    <img class="stage-dialog-larry" id="stage-dialog-larry" src="../images/LarrySleepy.png" alt="Larry the penguin feeling sleepy">
+                </div>
+                <div class="stage-dialog-overview">
+                    <p class="stage-dialog-summary"><strong id="stage-dialog-total"></strong> asleep <span id="stage-dialog-time-in-bed"></span></p>
+                </div>
                 <div class="stage-dialog-bar" aria-hidden="true">
                     <span class="deep" data-detail-bar="deep"></span>
                     <span class="light" data-detail-bar="light"></span>
