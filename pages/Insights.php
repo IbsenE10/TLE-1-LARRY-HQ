@@ -144,6 +144,7 @@ function e($text)
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/insightsStyle.css">
+    <link rel="icon" href="../images/LarryFavico.ico">
     <!-- NEW: the JavaScript for this page (defer = run after the HTML has loaded) -->
     <script src="../js/insights.js" defer></script>
 </head>

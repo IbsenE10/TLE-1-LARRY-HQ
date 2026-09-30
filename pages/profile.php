@@ -26,6 +26,7 @@ $hiddenPassword = str_repeat('*', 10);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
     <link rel="stylesheet" href="../css/ProfileStyle.css">
+    <link rel="icon" href="../images/LarryFavico.ico">
 </head>
 
 <body>
