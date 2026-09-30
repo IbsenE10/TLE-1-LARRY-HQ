@@ -84,4 +84,15 @@ if (isset($_POST['login'])) {
     header('Location: ../pages/login_index.php');
     exit();
 }
+
+
+// LOGOUT
+
+if (isset($_POST['logout'])) {
+
+    session_unset();
+    session_destroy();
+    header('Location: ../pages/login_index.php');
+    exit();
+}
 ?>

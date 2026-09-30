@@ -166,7 +166,7 @@ function e($text)
             </svg>
             GoodmorningLarry!
         </a>
-        <a class="profile-btn" href="login_index.php" aria-label="Your profile">
+        <a class="profile-btn" href="profile.php" aria-label="Your profile">
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
@@ -362,7 +362,7 @@ function e($text)
                 </a>
             </li>
             <li>
-                <a href="login_index.php">
+                <a href="profile.php">
                     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                         <circle cx="12" cy="7" r="4" />
