@@ -40,7 +40,7 @@ h2 {
     font-size: 2rem;
     text-align: center;
     margin: 0 0 28px;
-    color: #6f7eb3;
+    color: #4d6ef5;
 }
 
 input,
@@ -57,7 +57,7 @@ select {
 button {
     width: 100%;
     padding: 14px;
-    background: #AFBFFF;
+    background: #4d6ef5;
     border-radius: 10px;
     border: none;
     cursor: pointer;
@@ -68,7 +68,7 @@ button {
 }
 
 button:hover {
-    background: #9aa9e7;
+    background: #3f5ccf;
 }
 
 p {
@@ -78,7 +78,7 @@ p {
 }
 
 p a {
-    color: #7c93f0;
+    color: #4d6ef5;
     text-decoration: none;
 }
 
