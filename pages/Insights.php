@@ -74,7 +74,8 @@ $percent = min(100, round($total / $goal * 100, 1));     // ring fill, max 100%
 // "Good sleep" = within 1 hour of the goal
 $rangeMin = ($goal - 60) / 60;                           // 480 → 7
 $rangeMax = ($goal + 60) / 60;                           // 480 → 9
-if ($total >= $goal - 60 && $total <= $goal + 60) {
+$sleepGoalMet = $total >= $goal - 60 && $total <= $goal + 60;
+if ($sleepGoalMet) {
     $title = "You're doing great!";
     $badge = '✓ Good sleep!';
     $badgeClass = '';
@@ -191,7 +192,7 @@ function e($text)
                 <h1><?= $lastNight ? $title : 'No sleep data yet' ?></h1>
                 <p class="muted">Here's how you slept, and how you feel today.</p>
             </div>
-            <img class="larry" src="../images/LarrySleep.png" alt="Larry the penguin sleeping">
+            <img class="larry" src="../images/<?= $sleepGoalMet ? 'LarryEnergetic.png' : 'LarrySleepy.png' ?>" alt="<?= $sleepGoalMet ? 'Larry the penguin feeling energetic' : 'Larry the penguin feeling sleepy' ?>">
         </section>
 
         <?php if ($lastNight): ?>

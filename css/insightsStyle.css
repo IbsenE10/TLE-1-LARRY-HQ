@@ -148,8 +148,6 @@ h1 {
   width: 140px;
   height: 120px;
   object-fit: cover;
-  border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%; /* blob shape */
-  background: var(--accent-soft);
 }
 
 /*  Cards  */
