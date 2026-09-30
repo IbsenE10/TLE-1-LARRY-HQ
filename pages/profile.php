@@ -1,44 +1,67 @@
+<?php
+
+session_start();
+require_once '../php/db.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login_index.php');
+    exit();
+}
+
+$stmt = $conn->prepare("SELECT username, email FROM users WHERE id = ?");
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$hiddenPassword = str_repeat('*', 10);
+
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TLE1</title>
-    <link rel="stylesheet" href="../css/HomeStyle.css">
-    <script src="../js/home.js" defer></script>
+    <title>Profile</title>
+    <link rel="stylesheet" href="../css/ProfileStyle.css">
 </head>
 
 <body>
 
     <header>
         <div>
-            <h1></h1>
+            <h1>Profile</h1>
         </div>
     </header>
 
     <main>
-        <section class="subheading1">
-            <div class="discription">
-                <h2>"Goodmorning Larry!"</h2>
-                <p>
-                    Larry is happy to see you!
-                    Hopefully you woke up calm and were able to have an energetic start!
-                    Larry noticed you had a lot of sugar before bed yesterday, this can cause a disruption in sleep.
-                    Lets dile back on the sugar today and start fresh so we can end smoothly!
-                </p>
+        <section class="profile-details">
+            <div class="profile-field">
+                <label>Username</label>
+                <p><?= htmlspecialchars($user['username']); ?></p>
             </div>
-            <div class="Larry" id="larry-waving">
-                <video autoplay loop muted playsinline>
-                    <source src="../images/LarryWaving.webm" type="video/webm">
-                </video>
+
+            <div class="profile-field">
+                <label>Email</label>
+                <p><?= htmlspecialchars($user['email']); ?></p>
             </div>
+
+            <div class="profile-field">
+                <label>Password</label>
+                <p><?= $hiddenPassword; ?></p>
+            </div>
+
+            <form action="../php/login_register.php" method="post">
+                <button type="submit" name="logout">Log out</button>
+            </form>
         </section>
 
         <nav class="bottom-nav" aria-label="Main menu">
             <ul>
                 <li>
-                    <a href="Home.php" class="active" aria-current="page">
+                    <a href="Home.php">
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" />
                             <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -47,7 +70,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="profile.php">
+                    <a href="profile.php" class="active" aria-current="page">
                         <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                             <circle cx="12" cy="7" r="4" />
@@ -86,5 +109,7 @@
 
     <footer>
     </footer>
+
+</body>
 
 </html>
