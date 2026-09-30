@@ -19,9 +19,11 @@ function getThemeForCurrentTime() {
 
     return 'night';
 }
-
+    
 function applyTimeTheme() {
-    document.body.dataset.theme = getThemeForCurrentTime();
+    let currentTheme = getThemeForCurrentTime();
+    document.body.dataset.theme = currentTheme;
+    console.log(currentTheme);
 }
 
 applyTimeTheme();

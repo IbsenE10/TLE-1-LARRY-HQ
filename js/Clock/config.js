@@ -14,7 +14,17 @@ export const ESP_MAX_MISSED_PINGS = 2;      // pas na zoveel gemiste pings "offl
 export const SELECTOR_SLEEP_INPUT = '#sleep-time';
 export const SELECTOR_WAKE_INPUT = '#wake-time';
 export const SELECTOR_PERCENT_CIRCLE = '.percentage-circle';
+export const SELECTOR_LAMP_IMAGE = '#lamp-image';
+export const SELECTOR_POWER_SWITCH = '#alarm-toggle';
+export const SELECTOR_DEMO_BUTTON = '#demo-button';
+export const SELECTOR_DEMO_STATUS = '#demo-status';
 export const UPDATE_PERCENTAGE_CIRCLE = true;   // toont de echte lamphelderheid in de cirkel
+
+// ---------- Lamp-afbeelding ----------
+// De <img id="lamp-image"> wordt gedimd/verhelderd op basis van de
+// werkelijke helderheid van de ESP32 - geen losse plaatjes per percentage nodig.
+export const LAMP_MIN_OPACITY = 0.15;   // hoe "uit" de lamp eruitziet op 0%
+export const LAMP_MIN_BRIGHTNESS_FILTER = 0.35;  // CSS brightness() op 0%
 
 // ---------- Klok ----------
 export const SCHEDULE_ENABLED = true;           // false = lamp wordt niet automatisch aangestuurd
@@ -27,6 +37,12 @@ export const DEBUG_TIME_OFFSET_MINUTES = 0;     // om te testen: klok X minuten 
 export const DISMISS_ALARM_ON_TAP = true;       // tik/klik op de pagina = wekker uit
 export const KEEP_SCREEN_AWAKE = false;         // scherm aan laten (pagina moet open blijven!)
 
+// ---------- Powerswitch (#alarm-toggle) ----------
+// Uit: lamp gaat direct uit en de planning wordt gepauzeerd (klok blijft meelopen,
+//      er wordt alleen niets naar de lamp gestuurd totdat hij weer aan gaat).
+// Aan: planning gaat weer actief de lamp aansturen.
+export const POWER_SWITCH_OFF_BRIGHTNESS = 0;
+
 // ============================================================
 //  FASE 1 - VOOR HET SLAPEN: lamp wordt geleidelijk zachter
 // ============================================================
@@ -37,11 +53,11 @@ export const WIND_DOWN_END_BRIGHTNESS = 40;     // % waar je bij bedtijd op uitk
 // ============================================================
 //  FASE 2 - TIJDENS DE SLAAP: lamp "ademt" zacht
 // ============================================================
-export const SLEEP_PULSE_ENABLED = false;        // false = lamp blijft constant branden
-export const SLEEP_PULSE_MIN = 10;              // % laagste punt van het ademen
-export const SLEEP_PULSE_MAX = 40;              // % hoogste punt van het ademen
+export const SLEEP_PULSE_ENABLED = true;        // false = lamp blijft constant branden
+export const SLEEP_PULSE_MIN = 0;              // % laagste punt van het ademen
+export const SLEEP_PULSE_MAX = 0;              // % hoogste punt van het ademen
 export const SLEEP_PULSE_PERIOD_SEC = 10;       // seconden per ademhaling
-export const SLEEP_STEADY_BRIGHTNESS = 40;      // % als SLEEP_PULSE_ENABLED = false
+export const SLEEP_STEADY_BRIGHTNESS = 0;      // % als SLEEP_PULSE_ENABLED = false
 
 // ============================================================
 //  FASE 3 - WAKKER WORDEN
@@ -114,6 +130,52 @@ export const PHASES = [
     id: 'after-alarm',
     anchor: 'wake',
     offsetMin: WAKE_ALARM_MINUTES,
+    action: AFTER_ALARM_BRIGHTNESS > 0
+      ? { type: 'set', brightness: AFTER_ALARM_BRIGHTNESS }
+      : { type: 'off' },
+  },
+];
+
+// ============================================================
+//  DEMO - dezelfde vijf fases, maar samengeperst in 5 minuten
+//  zodat je alles in één keer kunt laten zien.
+//  offsetSec: seconden na het indrukken van de Demo-knop
+//  (i.p.v. offsetMin/anchor, want er is geen bed-/wektijd nodig)
+// ============================================================
+export const DEMO_TOTAL_SECONDS = 5 * 60;
+
+export const DEMO_PHASES = [
+  {
+    id: 'demo-wind-down',
+    offsetSec: 0,
+    label: 'Dimmen voor het slapen',
+    action: { type: 'fade', from: WIND_DOWN_START_BRIGHTNESS, to: WIND_DOWN_END_BRIGHTNESS, durationSec: 40 },
+  },
+  {
+    id: 'demo-sleep',
+    offsetSec: 40,
+    label: 'Slaapstand (zacht ademen)',
+    action: SLEEP_PULSE_ENABLED
+      ? { type: 'pulse', min: SLEEP_PULSE_MIN, max: SLEEP_PULSE_MAX, periodSec: 2 }
+      : { type: 'set', brightness: SLEEP_STEADY_BRIGHTNESS },
+  },
+  {
+    id: 'demo-sunrise',
+    offsetSec: 190,
+    label: 'Zonsopgang',
+    action: { type: 'fade', from: WAKE_SUNRISE_START_BRIGHTNESS, to: WAKE_SUNRISE_END_BRIGHTNESS, durationSec: 60 },
+  },
+  {
+    id: 'demo-alarm',
+    offsetSec: 250,
+    label: 'Wekker!',
+    dismissTo: 'demo-after-alarm',
+    action: { type: 'pulse', min: WAKE_ALARM_MIN, max: WAKE_ALARM_MAX, periodSec: 0.6 },
+  },
+  {
+    id: 'demo-after-alarm',
+    offsetSec: DEMO_TOTAL_SECONDS,
+    label: 'Klaar',
     action: AFTER_ALARM_BRIGHTNESS > 0
       ? { type: 'set', brightness: AFTER_ALARM_BRIGHTNESS }
       : { type: 'off' },

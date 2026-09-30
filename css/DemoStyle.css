@@ -1,0 +1,41 @@
+/* Los bestand zodat je bestaande AlarmStyle.css niet overschreven wordt.
+   Kleuren e.d. staan losjes - pas gerust aan aan je eigen stijl. */
+
+.demo-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.demo-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 999px;
+    background: #0a84ff;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.demo-button.demo-running {
+    background: #ff453a;
+}
+
+.demo-status {
+    font-size: 0.8rem;
+    color: #8e8e93;
+    min-height: 1.1em;
+    text-align: center;
+}
+
+/* Lamp-afbeelding: vloeiend laten dimmen i.p.v. springend */
+#lamp-image {
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+#lamp-image.lamp-offline {
+    filter: grayscale(1) !important;
+}
