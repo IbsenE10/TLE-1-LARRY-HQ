@@ -30,14 +30,10 @@ $hiddenPassword = str_repeat('*', 10);
 
 <body>
 
-    <header>
-        <div>
-            <h1>Profile</h1>
-        </div>
-    </header>
-
     <main>
         <section class="profile-details">
+            <h1>Profile</h1>
+
             <div class="profile-field">
                 <label>Username</label>
                 <p><?= htmlspecialchars($user['username']); ?></p>

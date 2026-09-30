@@ -1,9 +1,5 @@
-/*
-   ProfileStyle.css – Profile page (phone)
-   */
-
 :root {
-    --bg: #f4f7fe;
+    --bg: #EEF6FF;
     --card: #ffffff;
     --text: #141b3c;
     --muted: #7a82a0;
@@ -22,22 +18,11 @@ body {
     min-height: 100dvh;
     margin: 0;
     padding-bottom: 90px;
-    /* room for the bottom menu */
     font-family: "Nunito", Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
 }
 
-header {
-    padding: 20px;
-    text-align: center;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 1.4rem;
-    color: var(--accent);
-}
 
 main {
     max-width: 600px;
@@ -53,15 +38,15 @@ main {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 20px;
+    padding: 40px 30px;
+    margin-top: 40px;
 }
 
-.profile-field {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
+.profile-details h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin: 0 0 14px;
+    color: var(--accent);
 }
 
 .profile-field:last-of-type {
@@ -105,9 +90,7 @@ main {
     background: #3958d6;
 }
 
-/*
-   BOTTOM MENU (same look as Home / Insights)
-   */
+/* bottom nav */
 
 .bottom-nav {
     position: fixed;
