@@ -38,7 +38,7 @@ function getThemeForCurrentTime() {
 
     return 'night';
 }
-
+    
 function applyTimeTheme() {
     const theme = getThemeForCurrentTime();
 

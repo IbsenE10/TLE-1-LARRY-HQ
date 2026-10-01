@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TLE1</title>
     <link rel="stylesheet" href="css/AlarmStyle.css">
+    <link rel="stylesheet" href="css/DemoStyle.css">
 </head>
 
 <body>
@@ -43,6 +44,12 @@
                 <input type="checkbox" id="alarm-toggle" checked>
                 <span class="slider"></span>
             </label>
+
+            <!-- Demo: speelt de hele cyclus in 5 minuten af -->
+            <div class="demo-section">
+                <button type="button" id="demo-button" class="demo-button">Demo (5 min)</button>
+                <div id="demo-status" class="demo-status"></div>
+            </div>
 
         </div>
 

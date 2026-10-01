@@ -1,16 +1,3 @@
-// ============================================================
-//  CLOCK HANDLER
-//  Leest bedtijd en wektijd van de pagina, bouwt daarmee de
-//  planning uit config.js (PHASES) en roept op de juiste
-//  momenten de functies van de EspHandler aan.
-//
-//  - Werkt over middernacht heen (bv. 22:30 -> 07:30)
-//  - Pagina midden in de nacht geopend? Dan wordt de fase die
-//    nu hoort te lopen direct toegepast (inclusief de voortgang
-//    van een fade).
-//  - Mislukt een commando? Dan wordt het opnieuw geprobeerd.
-// ============================================================
-
 import * as C from './config.js';
 
 const MIN_MS = 60 * 1000;
@@ -44,7 +31,18 @@ export class ClockHandler {
     this.lastFailKey = null;
     this.lastFailAt = 0;
     this.busy = false;
+    this.enabled = true;         // false = powerswitch staat uit, klok stuurt de lamp niet aan
     this._timer = null;
+  }
+
+  // Powerswitch uit: lamp direct uit, planning gepauzeerd.
+  // Powerswitch weer aan: huidige fase opnieuw toepassen.
+  setEnabled(enabled) {
+    this.enabled = enabled;
+    if (enabled) return this.reset();
+    console.info('[Klok] planning gepauzeerd (powerswitch uit)');
+    this.appliedKey = null;
+    this.lastFailKey = null;
   }
 
   start() {
@@ -116,7 +114,7 @@ export class ClockHandler {
 
   // ---------- elke seconde ----------
   async tick() {
-    if (!C.SCHEDULE_ENABLED || this.busy) return;
+    if (!C.SCHEDULE_ENABLED || !this.enabled || this.busy) return;
 
     const now = this.now();
     const session = this._currentSession(now);
@@ -178,7 +176,7 @@ export class ClockHandler {
   // Wekker wegtikken: springt naar de fase die bij 'dismissTo' staat
   async dismissAlarm() {
     const current = this.currentPhase;
-    if (!this.session || !current || !current.dismissTo) return;
+    if (!this.enabled || !this.session || !current || !current.dismissTo) return;
 
     const target = this.session.phases.find((p) => p.id === current.dismissTo);
     if (!target) return;
